@@ -1,4 +1,36 @@
+<?php
+// lấy a danh mục sản phẩm
+$sql_cat = "select* from category order by cat_id asc";
+$query_cat = mysqli_query($connect, $sql_cat);
+// kiểm tra form 
+if(isset($_POST['sbm'])){
+    $prd_name = $_POST ['prd_name'];
+    $prd_price = $_POST ['prd_price '];
+    $prd_warranty=$_POST ['prd_warranty'];
+    $prd_accessories =$_POST ['prd_accessories'];
+    $prd_promotion =$_POST ['prd_promotion'];
+    $prd_new =$_POST ['prd_new'];
+    $prd_image= $_FILES['prd_image']['name'];
+    $prd_image_tmp= $_FILES['prd_image']['tmp_name'];
+    $cat_id= $_POST['cat_id'];
+    $prd_status= $_POST['prd_status'];
 
+    if(isset($_POST['prd_featured'])){
+        $prd_featured=$_POST['prd_featured'];
+    }else{
+        $prd_featured=0;
+    }
+    $prd_details= $_POST['prd_details'];
+    $sql="insert into product(prd_name,prd_price,prd_warranty,prd_accessories,prd_promotion,prd_new,prd_image,cat_id,prd_status,prd_featured,prd_details)
+       VALUES('$prd_name','$prd_price ','$prd_warranty','$prd_accessories','$prd_promotion','$prd_new','$prd_image','$cat_id','$prd_status','$prd_featured','$prd_details')";
+       $query=mysqli_query($connect,$sql);
+       //up ảnh lên server
+       move_uploaded_file($prd_image_tmp,'img/products/'.$prd_image);
+       header('location:index.php?page_layout=product');
+ 
+}
+
+?>
 		
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
 		<div class="row">
@@ -60,10 +92,9 @@
                                 <div class="form-group">
                                     <label>Danh mục</label>
                                     <select name="cat_id" class="form-control">
-                                        <option value=1>iPhone</option>
-                                        <option value=2>Samsung</option>
-                                        <option value=3>Nokia</option>
-                                        <option value=4>LG</option>
+                                        <?php while($row_cat= mysqli_fetch_assoc($query_cat)){  ?>
+                                        <option value= <?php echo $row_cat['cat_id']; ?>><?php echo $row_cat ['cat_name'];?></option>
+                                        <?php  }  ?>
                                     </select>
                                 </div>
                                 
