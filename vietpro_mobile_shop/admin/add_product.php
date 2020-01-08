@@ -31,6 +31,7 @@ if(isset($_POST['sbm'])){
 }
 
 ?>
+<script src="ckeditor/ckeditor.js"></script>
 		
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
 		<div class="row">
@@ -117,9 +118,11 @@ if(isset($_POST['sbm'])){
                                 <div class="form-group">
                                         <label>Mô tả sản phẩm</label>
                                         <textarea required name="prd_details" class="form-control" rows="3"></textarea>
+                                        <script>CKEDITOR.replace('prd_details');</script>
                                     </div>
                                 <button name="sbm" type="submit" class="btn btn-success">Thêm mới</button>
                                 <button type="reset" class="btn btn-default">Làm mới</button>
+
                             </div>
                         </form>
                         </div>
